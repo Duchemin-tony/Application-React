@@ -3,26 +3,23 @@ import styled from 'styled-components'
 import { StyledLink } from '../../utils/style/Atoms'
 import DarkLogo from '../../assets/dark-logo.png'
 
-const StyledLogo = styled.img`
-  height: 60px;
-  width: 150px;
+const HomeLogo = styled.img`
+  height: 70px;
 `
 
 const NavContainer = styled.nav`
+  padding: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 30px;
 `
 
 function Header() {
   return (
     <NavContainer>
-      <div>
-        <Link to='/'>
-          <StyledLogo src={DarkLogo} />
-        </Link>
-      </div>
+      <Link to='/'>
+        <HomeLogo src={DarkLogo} />
+      </Link>
       <div>
         <StyledLink to='/'>Accueil</StyledLink>
         <StyledLink to='/freelances'>Profils</StyledLink>
@@ -33,6 +30,5 @@ function Header() {
     </NavContainer>
   )
 }
-
 
 export default Header

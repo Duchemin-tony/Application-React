@@ -1,35 +1,57 @@
 import styled from 'styled-components'
-import HomeIllustration from '../../assets/home-illustration.svg'
-import colors from '../../utils/style/color'
+import colors from '../../utils/style/colors'
 import { StyledLink } from '../../utils/style/Atoms'
+import HomeIllustration from '../../assets/home-illustration.svg'
 
-const StyledContainer = styled.div`
+const HomeWrapper = styled.div`
   display: flex;
-  padding: 80px;
-  background-color: ${colors.backgroundLight};
+  justify-content: center;
 `
 
-const StyledTitle = styled.h1`
-  width: 65%;
-  font-size: 2.8em;
-  line-height: 1.8em;
+const HomerContainer = styled.div`
+  margin: 30px;
+  background-color: ${colors.backgroundLight};
+  padding: 60px 90px;
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+`
+
+const LeftCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  ${StyledLink} {
+    max-width: 250px;
+  }
+`
+
+const StyledTitle = styled.h2`
+  padding-bottom: 30px;
+  max-width: 280px;
+  line-height: 50px;
+`
+
+const Illustration = styled.img`
+  flex: 1;
 `
 
 function Home() {
   return (
-    <StyledContainer>
-      <div>
-        <StyledTitle>
-          Repérez vos besoins, on s'occupe du reste, avec les meilleurs talents
-        </StyledTitle>
-        <StyledLink to='/survey/1' $isFullLink>
-          Faire le test
-        </StyledLink>
-      </div>
-      <div>
-        <img src={HomeIllustration} alt='img accueil' />
-      </div>
-    </StyledContainer>
+    <HomeWrapper>
+      <HomerContainer>
+        <LeftCol>
+          <StyledTitle>
+            Repérez vos besoins, on s’occupe du reste, avec les meilleurs talents
+          </StyledTitle>
+          <StyledLink to='/survey/1' $isFullLink>
+            Faire le test
+          </StyledLink>
+        </LeftCol>
+        <Illustration src={HomeIllustration} />
+      </HomerContainer>
+    </HomeWrapper>
   )
 }
 

@@ -1,20 +1,34 @@
 import styled from 'styled-components'
-import error404 from '../../assets/404.svg'
-import colors from '../../utils/style/color'
+import colors from '../../utils/style/colors'
 
-const StyledContainer = styled.div`
-  padding: 80px;
+const ErrorWrapper = styled.div`
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
   background-color: ${colors.backgroundLight};
-  text-align: center;
+  align-items: center;
+`
+
+const ErrorTitle = styled.h1`
+  font-weight: 300;
+`
+
+const ErrorSubtitle = styled.h2`
+  font-weight: 300;
+  color: ${colors.secondary};
+`
+
+const Illustration = styled.img`
+  max-width: 800px;
 `
 
 function Error() {
   return (
-    <StyledContainer>
-      <p> Oups...</p>
-      <img src={error404} alt='error404' />
-      <h1>Il semblerait qu'il y ait un problème</h1>
-    </StyledContainer>
+    <ErrorWrapper>
+      <ErrorTitle>Oups...</ErrorTitle>
+      <Illustration src='https://github.com/atoulmet/assets/blob/master/404.svg?raw=true' />
+      <ErrorSubtitle>Il semblerait que la page que vous cherchez n’existe pas</ErrorSubtitle>
+    </ErrorWrapper>
   )
 }
 

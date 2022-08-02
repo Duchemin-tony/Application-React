@@ -1,58 +1,88 @@
-import DefaultPicture from '../../assets/profile.png'
 import Card from '../../components/Card'
 import styled from 'styled-components'
-import colors from '../../utils/style/color'
-
-const freelanceProfiles = [
-  {
-    name: 'Jane Doe',
-    jobTitle: 'Devops',
-    picture: DefaultPicture,
-  },
-  {
-    name: 'John Doe',
-    jobTitle: 'Developpeur frontend',
-    picture: DefaultPicture,
-  },
-  {
-    name: 'Jeanne Biche',
-    jobTitle: 'Développeuse Fullstack',
-    picture: DefaultPicture,
-  },
-]
+import colors from '../../utils/style/colors'
+import { useEffect, useState } from 'react'
 
 const CardsContainer = styled.div`
   display: grid;
   gap: 24px;
   grid-template-rows: 350px 350px;
   grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  justify-items: center;
 `
 
-const TextContainer = styled.div`
+const PageTitle = styled.h1`
+  font-size: 30px;
+  color: black;
   text-align: center;
-  padding: 80px;
+  padding-bottom: 30px;
 `
 
-const TitleContainer = styled.h1`
-  margin-bottom: 50px;
-`
-const SubTitleContainer = styled.p`
+const PageSubtitle = styled.h2`
+  font-size: 20px;
   color: ${colors.secondary};
   font-weight: 300;
+  text-align: center;
+  padding-bottom: 30px;
 `
 
+/*const freelanceProfiles = [
+  {
+    name: 'Jane Doe',
+    jobTitle: 'Devops',
+  },
+  {
+    name: 'John Doe',
+    jobTitle: 'Developpeur frontend',
+  },
+  {
+    name: 'Jeanne Biche',
+    jobTitle: 'Développeuse Fullstack',
+  },
+]*/
+
 function Freelances() {
+  const [freelancersList, setFreelancersList] = useState([])
+  const [isDataLoading, setDataLoading] = useState(false)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    async function fetchSurvey() {
+      setDataLoading(true)
+      try {
+        const response = await fetch(`http://localhost:8000/freelances`)
+        const { freelancersList } = await response.json()
+        setFreelancersList(freelancersList)
+      } catch (err) {
+        console.log('===== error =====', err)
+        setError(true)
+      } finally {
+        setDataLoading(false)
+      }
+    }
+    fetchSurvey()
+  }, [])
+
+  if (error) {
+    return <span>Oups il y a eu un problème</span>
+  }
+
+  /*useEffect(() => {
+    fetch(`http://localhost:8000/freelances`).then((response) =>
+      response
+        .json()
+        .then(({ freelancersList }) => console.log(freelancersList))
+        .catch((error) => console.log(error)),
+    )
+  }, [])*/
   return (
     <div>
-      <TextContainer>
-        <TitleContainer>Trouvez votre prestataire</TitleContainer>
-        <SubTitleContainer>
-          Chez Shiny nous réunissons les meilleurs profils pour vous.
-        </SubTitleContainer>
-      </TextContainer>
+      <PageTitle>Trouvez votre prestataire</PageTitle>
+      <PageSubtitle>Chez Shiny nous réunissons les meilleurs profils pour vous.</PageSubtitle>
       <CardsContainer>
-        {freelanceProfiles.map((profile, index) => (
-          <Card key={`${profile.name}-${index}`} label={profile.jobTitle} title={profile.name} />
+        {freelancersList.map((profile, id) => (
+          <Card key={`${profile.name}-${id}`} label={profile.job} title={profile.name} picture={profile.picture} />
         ))}
       </CardsContainer>
     </div>
