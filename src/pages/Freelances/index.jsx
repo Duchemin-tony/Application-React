@@ -38,11 +38,10 @@ function Freelances() {
   const { theme } = useTheme()
   const { data, isLoading, error } = useFetch(`http://localhost:8000/freelances`)
 
-  // Ici le "?" permet de s'assurer que data existe bien.
   const freelancersList = data?.freelancersList
 
   if (error) {
-    return <span>Oups il y a eu un problème</span>
+    return <span>Il y a un problème</span>
   }
 
   return (
@@ -53,11 +52,11 @@ function Freelances() {
       </PageSubtitle>
       {isLoading ? (
         <LoaderWrapper>
-          <Loader theme={theme} />
+          <Loader theme={theme} data-testid='loader' />
         </LoaderWrapper>
       ) : (
         <CardsContainer>
-          {freelancersList.map((profile, index) => (
+          {freelancersList?.map((profile, index) => (
             <Card
               key={`${profile.name}-${index}`}
               label={profile.job}

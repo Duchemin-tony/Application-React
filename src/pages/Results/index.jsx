@@ -87,7 +87,7 @@ function Results() {
 
   return isLoading ? (
     <LoaderWrapper>
-      <Loader />
+      <Loader data-testid='loader' />
     </LoaderWrapper>
   ) : (
     <ResultsContainer theme={theme}>
@@ -95,26 +95,22 @@ function Results() {
         Les compétences dont vous avez besoin :
         {resultsData &&
           resultsData.map((result, index) => (
-            <JobTitle
-              key={`result-title-${index}-${result.title}`}
-              theme={theme}
-            >
+            <JobTitle key={`result-title-${index}-${result.title}`} theme={theme}>
               {formatJobList(result.title, resultsData.length, index)}
             </JobTitle>
           ))}
       </ResultsTitle>
-      <StyledLink $isFullLink to="/freelances">
+      <StyledLink $isFullLink to='/freelances'>
         Découvrez nos profils
       </StyledLink>
       <DescriptionWrapper>
         {resultsData &&
           resultsData.map((result, index) => (
-            <JobDescription
-              theme={theme}
-              key={`result-detail-${index}-${result.title}`}
-            >
-              <JobTitle theme={theme}>{result.title}</JobTitle>
-              <p>{result.description}</p>
+            <JobDescription theme={theme} key={`result-detail-${index}-${result.title}`}>
+              <JobTitle theme={theme} data-testid='job-title'>
+                {result.title}
+              </JobTitle>
+              <p data-testid='job-description'>{result.description}</p>
             </JobDescription>
           ))}
       </DescriptionWrapper>
