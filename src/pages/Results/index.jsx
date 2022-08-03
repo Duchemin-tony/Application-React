@@ -1,6 +1,7 @@
 import { useContext } from 'react'
-import { SurveyContext } from '../../utils/context'
 import styled from 'styled-components'
+import { SurveyContext } from '../../utils/context'
+import EmptyList from '../../components/EmptyList/EmptyList'
 import colors from '../../utils/style/colors'
 import { useFetch, useTheme } from '../../utils/hooks'
 import { StyledLink, Loader } from '../../utils/style/Atoms'
@@ -85,9 +86,13 @@ function Results() {
 
   const resultsData = data?.resultsData
 
+  if (resultsData?.length < 1) {
+    return <EmptyList theme={theme} />
+  }
+
   return isLoading ? (
     <LoaderWrapper>
-      <Loader data-testid='loader' />
+      <Loader data-testid="loader" />
     </LoaderWrapper>
   ) : (
     <ResultsContainer theme={theme}>
@@ -95,22 +100,28 @@ function Results() {
         Les compétences dont vous avez besoin :
         {resultsData &&
           resultsData.map((result, index) => (
-            <JobTitle key={`result-title-${index}-${result.title}`} theme={theme}>
+            <JobTitle
+              key={`result-title-${index}-${result.title}`}
+              theme={theme}
+            >
               {formatJobList(result.title, resultsData.length, index)}
             </JobTitle>
           ))}
       </ResultsTitle>
-      <StyledLink $isFullLink to='/freelances'>
+      <StyledLink $isFullLink to="/freelances">
         Découvrez nos profils
       </StyledLink>
       <DescriptionWrapper>
         {resultsData &&
           resultsData.map((result, index) => (
-            <JobDescription theme={theme} key={`result-detail-${index}-${result.title}`}>
-              <JobTitle theme={theme} data-testid='job-title'>
+            <JobDescription
+              theme={theme}
+              key={`result-detail-${index}-${result.title}`}
+            >
+              <JobTitle theme={theme} data-testid="job-title">
                 {result.title}
               </JobTitle>
-              <p data-testid='job-description'>{result.description}</p>
+              <p data-testid="job-description">{result.description}</p>
             </JobDescription>
           ))}
       </DescriptionWrapper>
